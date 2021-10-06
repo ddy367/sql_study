@@ -78,7 +78,3 @@ WHERE job_id NOT LIKE '%REP%'
 GROUP BY job_id
 HAVING SUM(salary) >= 13000
 ORDER BY ±Þ¿©ÃÑ¾× DESC;
-
-
-
-
