@@ -1,31 +1,73 @@
---Á¶ÀÎ(JOIN)
+--ï¿½ï¿½ï¿½ï¿½(JOIN)
 
---ONÀ» »ç¿ëÇÑ ±âº» Á¶ÀÎ
-SELECT e.employee_id Á÷¿ø¹øÈ£, e.last_name ÀÌ¸§, 
-        d.department_id ºÎ¼­¹øÈ£, d.department_name ºÎ¼­ÀÌ¸§
+--ONï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+SELECT e.employee_id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£, e.last_name ï¿½Ì¸ï¿½, 
+        d.department_id ï¿½Î¼ï¿½ï¿½ï¿½È£, d.department_name ï¿½Î¼ï¿½ï¿½Ì¸ï¿½
 FROM employees e 
 JOIN departments d ON e.department_id = d.department_id;
     
---where ÀıÀ» »ç¿ëÇÑ ¿¹Àü Á¶ÀÎ¹æ¹ı
-SELECT e.employee_id Á÷¿ø¹øÈ£, e.last_name ÀÌ¸§, 
-        d.department_id ºÎ¼­¹øÈ£, d.department_name ºÎ¼­ÀÌ¸§
+--where ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¹ï¿½ï¿½
+SELECT e.employee_id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£, e.last_name ï¿½Ì¸ï¿½, 
+        d.department_id ï¿½Î¼ï¿½ï¿½ï¿½È£, d.department_name ï¿½Î¼ï¿½ï¿½Ì¸ï¿½
 FROM employees e, departments d
 WHERE e.department_id = d.department_id;
 
---3°³ Å×ÀÌºí Á÷¿ø ºÎ¼­ ·ÎÄÉÀÌ¼Ç Å×ÀÌºí Á¶ÀÎÇÏ±â
-SELECT e.employee_id Á÷¿ø¹øÈ£, d.department_name ºÎ¼­ÀÌ¸§, l.city µµ½Ã
+--3ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+SELECT e.employee_id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£, d.department_name ï¿½Î¼ï¿½ï¿½Ì¸ï¿½, l.city ï¿½ï¿½ï¿½ï¿½
 FROM employees e 
 JOIN departments d ON e.department_id = d.department_id
 JOIN locations l ON l.location_id = d.location_id;
 
---¿¹Á¦
-SELECT d.department_name ºÎ¼­¸í, l.city µµ½Ã¸í, c.country_name ±¹°¡¸í
+--ï¿½ï¿½ï¿½ï¿½
+SELECT d.department_name ï¿½Î¼ï¿½ï¿½ï¿½, l.city ï¿½ï¿½ï¿½Ã¸ï¿½, c.country_name ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 FROM departments d
 JOIN countries c ON c.country_id = l.country_id
 JOIN locations l ON l.location_id = d.location_id
 WHERE l.city IN('Seattle','London')AND c.country_name LIKE 'United%';
 
---ÀÚÃ¼ Á¶ÀÎ
-SELECT e.last_name Á÷¿ø, m.last_name ¸Å´ÏÀú
+--ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+SELECT e.last_name ï¿½ï¿½ï¿½ï¿½, m.last_name ï¿½Å´ï¿½ï¿½ï¿½
 FROM employees e
 JOIN employees m ON m.manager_id = e.employee_id;
+
+--ì™¸ë¶€ì¡°ì¸
+--ê¸°ë³¸ì¡°ì¸(ë¶€ì„œë²ˆí˜¸ê°€ NULLì¸ ì§ì›ì€ ì œì™¸)
+SELECT e.last_name ì´ë¦„, d.department_id ë¶€ì„œë²ˆí˜¸, d.department_name ë¶€ì„œëª…
+FROM employees e
+JOIN departments d
+    ON e.department_id = d.department_id;
+
+SELECT *
+FROM employees 
+WHERE department_id IS NULL; --ë¶€ì„œë²ˆí˜¸ê°€ NULLì¸ ì§ì›
+
+--LEFT ì™¸ë¶€ ì¡°ì¸ : ì§ì› í…Œì´ë¸” ì¤‘ì— ë¶€ì„œê°€ ì—†ëŠ” ì§ì›ë„ ì¶œë ¥
+SELECT e.last_name ì´ë¦„, d.department_id ë¶€ì„œë²ˆí˜¸, d.department_name ë¶€ì„œëª…
+FROM employees e
+LEFT OUTER JOIN departments d
+    ON e.department_id = d.department_id;
+    
+--RIGHT ì™¸ë¶€ ì¡°ì¸ : ë¶€ì„œ í…Œì´ë¸”ì— ìˆì§€ë§Œ ì§ì› í…Œì´ë¸”ì—ì„œ ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” ë¶€ì„œë„ ì „ë¶€ ì¶œë ¥ë¨
+SELECT e.last_name ì´ë¦„, d.department_id ë¶€ì„œë²ˆí˜¸, d.department_name ë¶€ì„œëª…
+FROM employees e
+RIGHT OUTER JOIN departments d
+    ON e.department_id = d.department_id;
+
+--FULL ì™¸ë¶€ ì¡°ì¸ : ì¡°ê±´ì— ë§ì§€ ì•ŠëŠ” ëª¨ë“  ë°ì´í„° ì¤„ì„ ì¶œë ¥í•¨
+SELECT e.last_name ì´ë¦„, d.department_id ë¶€ì„œë²ˆí˜¸, d.department_name ë¶€ì„œëª…
+FROM employees e
+FULL OUTER JOIN departments d
+    ON e.department_id = d.department_id;
+
+--ì˜ˆì œ
+SELECT c.country_name êµ­ê°€, c.country_id êµ­ê°€ë²ˆí˜¸, l.location_id ì§€ì—­ë²ˆí˜¸, l.city ë„ì‹œ 
+FROM countries c
+LEFT OUTER JOIN locations l
+    ON l.country_id = c.country_id
+ORDER BY ì§€ì—­ë²ˆí˜¸ DESC;
+
+--í¬ë¡œìŠ¤ ì¡°ì¸ ì˜ˆì œ
+SELECT c.country_name êµ­ê°€, r.region_name ì§€ì—­ì´ë¦„
+FROM countries c
+CROSS JOIN regions r;
+
